@@ -1,14 +1,45 @@
 library(tidyverse)
 library(lubridate)
 
-# 
-df <- read_csv("tweet_activity.csv")
+# NOTE: The purpose is to analyze Copy writing (lead-in Tweets) & Atomic Essay (writing)
+# Copy writing effectiveness = Media Engagement per Impression (How many people click your essay because of your tweet)
+# Essay writing effectiveness = Likes per Media Engagement (After they read your essay, how many clicked like?)
 
-# you actually need more data than "past 28 days"
-# you need data from January
-jan <- read_csv("tweet_activity_jan.csv")
-feb <- read_csv("tweet_activity_feb.csv")
-mar <- read_csv("tweet_activity_mar.csv")
+
+# Data: Manual Data Collection Day 1 - Day 60
+df <- readxl::read_xlsx("./data/data_driven_writing.xlsx")
+
+# Plot Data that was Manually Collected
+# Compare visual plot to Excel's Point and Click
+
+df %>%
+    ggplot(aes(x = Day, y = `mepi - copy writing`)) +
+    geom_point(color = ifelse(df$`mepi - copy writing` > 0.059, '#E08963', '#5E96AE'),
+               size = ifelse(df$`mepi - copy writing` > 0.059, 5, 4)) +
+    theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#B2EBE0"),
+        plot.background = element_rect(fill = "#B2EBE0"),
+        plot.title = element_text(colour = "#E08963", size = 20, face = "bold"),
+        plot.subtitle = element_text(colour = "#5E96AE", size = 12, face = "italic", margin = margin(0,0,30,0))
+    ) +
+    scale_x_continuous(breaks = seq(0, 60, by = 10)) +
+    labs(
+        title = "Copy Writing Effectiveness",
+        subtitle = "Media Engagement per Impression: Atomic Essays 1 - 60",
+        y = "MEPI",
+        x = "Atomic Essays",
+        caption = "Data & Graphic: @paulapivat"
+    )
+
+
+
+
+# Data: January to March
+jan <- read_csv("./data/tweet_activity_jan.csv")
+feb <- read_csv("./data/tweet_activity_feb.csv")
+mar <- read_csv("./data/tweet_activity_mar.csv")
 
 
 # no need to compare time, just rbind
