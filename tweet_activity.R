@@ -11,7 +11,7 @@ df <- readxl::read_xlsx("./data/data_driven_writing.xlsx")
 
 # Plot Data that was Manually Collected
 # Compare visual plot to Excel's Point and Click
-
+# TITLE: Copy Writing Effectiveness
 df %>%
     ggplot(aes(x = Day, y = `mepi - copy writing`)) +
     geom_point(color = ifelse(df$`mepi - copy writing` > 0.059, '#E08963', '#5E96AE'),
@@ -32,6 +32,30 @@ df %>%
         x = "Atomic Essays",
         caption = "Data & Graphic: @paulapivat"
     )
+
+
+# TITLE: Essay Writing Effectiveness
+df %>%
+    ggplot(aes(x = Day, y = `likes_ratio - essay effectiveness`)) +
+    geom_point(color = ifelse(df$`likes_ratio - essay effectiveness` > 0.5, "#38908F", "#B2EBE0"),
+               size = ifelse(df$`likes_ratio - essay effectiveness` > 0.5, 5, 4)) +
+    theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#FFBFA3"),
+        plot.background = element_rect(fill = "#FFBFA3"),
+        plot.title = element_text(colour = "#38908F", size = 20, face = "bold"),
+        plot.subtitle = element_text(colour = "#38908F", size = 12, face = "italic", margin = margin(0,0,30,0))
+    ) +
+    scale_x_continuous(breaks = seq(0, 60, by = 10)) +
+    labs(
+        title = "Essay Effectiveness",
+        subtitle = "Likes per Media Engagement: Atomic Essays 1 - 60",
+        y = "Likes Ratio",
+        x = "Atomic Essays",
+        caption = "Data & Graphic: @paulapivat"
+    )
+
 
 
 
